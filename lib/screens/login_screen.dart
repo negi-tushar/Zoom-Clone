@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zoom_clone/screens/home.dart';
+import 'package:zoom_clone/services/auth.dart';
 import 'package:zoom_clone/utils/colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    AuthMethods _authmethods = AuthMethods();
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -28,8 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Login'),
+              child: const Text('Google Sign In'),
               style: ElevatedButton.styleFrom(
                   primary: buttonColor,
                   minimumSize: const Size(double.infinity, 50),
@@ -37,6 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(30),
                     side: const BorderSide(color: buttonColor),
                   )),
+              onPressed: () async {
+                final res = await _authmethods.signInWihtGoogle(context);
+                if (res) {
+                  Navigator.of(context).pushNamed(Home.id);
+                }
+              },
             ),
           ),
         ],
